@@ -1,20 +1,23 @@
 from tkinter import Scrollbar, VERTICAL, CENTER, LEFT, RIDGE
 from tkinter import ttk
-import datetime
+
+from lib.date import get_current_yyyy_mm_dd
 
 
 class RegistData(ttk.Frame):
-    def __init__(self, notebook) -> None:
-        super().__init__(master=notebook, padding=(0, 20))
+    def __init__(self, master) -> None:
+        super().__init__(master=master, padding=(0, 20))
         self.pack()
 
+        # master is Notebook
+        self.master = master
         self.form_frame = ttk.Frame(self, padding=10)
         self.form_frame.pack()
         self.form_button_frame = ttk.Frame(self, padding=(0, 0, 0, 40))
         self.form_button_frame.pack()
         self.data_display_frame = ttk.Frame(self, borderwidth=2, relief=RIDGE)
         self.data_display_frame.pack()
-        self.send_data_button_frame = ttk.Frame(self, padding=(20, 20))
+        self.send_data_button_frame = ttk.Frame(self)
         self.send_data_button_frame.pack()
 
         self.create_widgets_for_form_frame()
@@ -36,12 +39,8 @@ class RegistData(ttk.Frame):
         price_label = ttk.Label(self.form_frame, text='金額')
         price_label.grid(row=3, column=0)
 
-        today = datetime.date.today()
-        formated_date = today.strftime('%Y/%m/%d')
-
         self.date_entry = ttk.Entry(
             self.form_frame, justify=CENTER, validate='all')
-        self.date_entry.insert(0, formated_date)
         self.date_entry.grid(row=1, column=1, pady=3)
         self.item_entry = ttk.Entry(
             self.form_frame, justify=CENTER)
@@ -87,9 +86,8 @@ class RegistData(ttk.Frame):
         data_scrollbar.grid(column=1, row=0, sticky='news')
 
     def create_widgets_for_send_data_button_frame(self):
-        send_data_button = ttk.Button(self, text='データを送信')
-        send_data_button.pack()
+        self.send_data_button = ttk.Button(self, text='データを送信', width=20)
+        self.send_data_button.pack(pady=20)
 
-        # 送信ボタン
-        # def send_data_to_database():
-        # 		messagebox.showinfo('家計簿登録成功', '家計簿に登録しました。')
+    def set_default_date(self):
+        self.date_entry.insert(0, get_current_yyyy_mm_dd())
