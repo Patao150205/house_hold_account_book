@@ -1,13 +1,10 @@
-from pickle import NONE
-from pprint import pprint
 from tkinter import StringVar, messagebox
-
 
 from Views.RegistData import RegistData
 from Views.Validation import regist_data_invalid_modal
 from Models.RegistDataModel import RegistDataModel
 from Models.ValidationModel import date_form_validation, is_num_only, validation_form_data
-from Controllers.EditDataController import EditDataController
+from Controllers.EditRegistDataController import EditRegistDataController
 
 
 class RegistDataController():
@@ -61,16 +58,17 @@ class RegistDataController():
         record_ids = self.view.data_treeview.get_children()
         for id in record_ids:
             record_values = self.view.data_treeview.item(id, 'values')
-            record_data = {
-                'date': record_values[0],
-                'item': record_values[1],
-                'price': record_values[2]
-            }
+            record_data = (record_values[0],
+                           record_values[1],
+                           record_values[2])
 
             data.append(record_data)
 
-        print(data)
+        self.model.create(data)
+
         messagebox.showinfo('データ登録成功', 'データ登録したよ')
 
+        self.view.data_treeview.detach(*self.view.data_treeview.get_children())
+
     def display_edit_record_window(self, event):
-        EditDataController(self.view.data_treeview)
+        EditRegistDataController(self.view.data_treeview)

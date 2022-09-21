@@ -1,14 +1,13 @@
 from tkinter import NSEW, RIDGE, ttk, Toplevel, CENTER
-from turtle import width
 from Models.ValidationModel import is_num_only, date_form_validation
 
 
-class EditData(Toplevel):
+class EditRegistData(Toplevel):
     def __init__(self, record_values, date, item, price) -> None:
         super().__init__(pady=30)
         self.geometry('600x600')
         self.resizable(width=False, height=False)
-        self.title('レコードの編集')
+        self.title('登録レコードの編集')
         self.grab_set()
         self.focus_set()
 

@@ -1,9 +1,9 @@
 from email import message
 from tkinter import StringVar, messagebox
-from Views.EditData import EditData
+from Views.EditRegistData import EditRegistData
 
 
-class EditDataController():
+class EditRegistDataController():
     def __init__(self, record):
         self.record = record
         self.record_id = self.record.focus()
@@ -14,7 +14,7 @@ class EditDataController():
         self.item = StringVar()
         self.price = StringVar()
 
-        self.view = EditData(
+        self.view = EditRegistData(
             self.record_values,
             self.date, self.item, self.price,
         )

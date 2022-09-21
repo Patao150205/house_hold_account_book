@@ -1,4 +1,5 @@
-test.py
-build
-dist
-**/*/__pycache__
+app/test.py
+app/data/**/*
+__pycache__
+build/**/*
+dist/**/*
