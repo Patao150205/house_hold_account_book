@@ -1,5 +1,5 @@
 from tkinter import StringVar, messagebox
-from Models.EditSearchDataModel import EditSearchDataModel
+from Models.MainDataModel import MainDataModel
 from Views.EditSearchData import EditSearchData
 
 
@@ -15,12 +15,16 @@ class EditSearchDataController():
         self.item = StringVar()
         self.price = StringVar()
 
-        self.model = EditSearchDataModel()
+        self.model = MainDataModel()
 
         self.view = EditSearchData(
-            self.record_values,
-            self.date, self.item, self.price,
+            self.record_values
         )
+
+        self.view.date_entry.config(textvariable=self.date)
+        self.view.item_entry.config(textvariable=self.item)
+        self.view.price_entry.config(textvariable=self.price)
+        # self.view..config(textvariable=self.price)
 
         self.view.send_data_button.config(
             command=self.send_data_to_treeview_and_database)

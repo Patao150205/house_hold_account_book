@@ -3,17 +3,13 @@ from Models.ValidationModel import is_num_only, date_form_validation
 
 
 class EditSearchData(Toplevel):
-    def __init__(self, record_values, date, item, price) -> None:
+    def __init__(self, record_values) -> None:
         super().__init__(pady=30)
         self.geometry('600x600')
         self.resizable(width=False, height=False)
         self.title('検索レコードの編集')
         self.grab_set()
         self.focus_set()
-
-        self.date = date
-        self.item = item
-        self.price = price
 
         self.record_values = record_values
 
@@ -74,17 +70,17 @@ class EditSearchData(Toplevel):
         date_only_cmd = self.form_frame.register(date_form_validation)
         num_only_cmd = self.form_frame.register(is_num_only)
 
-        date_entry = ttk.Entry(
-            self.form_frame, textvariable=self.date, justify=CENTER,
+        self.date_entry = ttk.Entry(
+            self.form_frame,justify=CENTER,
             validate='all', validatecommand=(date_only_cmd, '%S', '%P', '%V'))
-        date_entry.insert(0, self.record_values[1])
-        date_entry.grid(row=1, column=1, pady=3)
-        item_entry = ttk.Entry(
-            self.form_frame, textvariable=self.item, justify=CENTER)
-        item_entry.insert(0, self.record_values[2])
-        item_entry.grid(row=2, column=1, pady=3)
-        price_entry = ttk.Entry(
-            self.form_frame, textvariable=self.price, justify=CENTER,
+        self.date_entry.insert(0, self.record_values[1])
+        self.date_entry.grid(row=1, column=1, pady=3)
+        self.item_entry = ttk.Entry(
+            self.form_frame,  justify=CENTER)
+        self.item_entry.insert(0, self.record_values[2])
+        self.item_entry.grid(row=2, column=1, pady=3)
+        self.price_entry = ttk.Entry(
+            self.form_frame,justify=CENTER,
             validate='key', validatecommand=(num_only_cmd, '%S'))
-        price_entry.insert(0, self.record_values[3])
-        price_entry.grid(row=3, column=1, pady=3)
+        self.price_entry.insert(0, self.record_values[3])
+        self.price_entry.grid(row=3, column=1, pady=3)

@@ -2,7 +2,8 @@ from tkinter import StringVar, messagebox
 
 from Views.RegistData import RegistData
 from Views.Validation import regist_data_invalid_modal
-from Models.RegistDataModel import RegistDataModel
+from Models.MainDataModel import MainDataModel
+from Models.CategoryDataModel import CategoryDataModel
 from Models.ValidationModel import date_form_validation, is_num_only, validation_form_data
 from Controllers.EditRegistDataController import EditRegistDataController
 
@@ -12,8 +13,13 @@ class RegistDataController():
         self.date = StringVar()
         self.item = StringVar()
         self.price = StringVar()
+        self.category = StringVar()
 
-        self.model = RegistDataModel()
+        self.main_data_model = MainDataModel()
+        self.category_data_model = CategoryDataModel()
+
+        self.categories = self.category_data_model.get()
+        print(self.categories, '弊害図')
         self.view = RegistData(master)
 
         date_only_cmd = self.view.form_frame.register(
@@ -30,6 +36,9 @@ class RegistDataController():
             textvariable=self.price,
             validate='key',
             validatecommand=(num_only_cmd, '%S'))
+        
+        self.view.category_combobox.config(values=[e[1] for e in self.categories])
+
         self.view.form_input_button.config(command=self.add_form_info_to_table)
         self.view.form_clear_button.config(command=self.clear_form_data)
         self.view.data_treeview.bind(
@@ -64,7 +73,7 @@ class RegistDataController():
 
             data.append(record_data)
 
-        self.model.create(data)
+        self.main_data_model.create(data)
 
         messagebox.showinfo('データ登録成功', 'データ登録したよ')
 
@@ -72,3 +81,4 @@ class RegistDataController():
 
     def display_edit_record_window(self, event):
         EditRegistDataController(self.view.data_treeview)
+

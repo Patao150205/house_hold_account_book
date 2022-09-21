@@ -12,18 +12,9 @@ class DB():
 
         self.connection = sqlite3.connect(self.db_file_path)
         self.cursor = self.connection.cursor()
-        isexist = self.table_isexist()
-
-        if isexist:
-            pass
-        else:
-            self.create_initial_table()
 
     def __del__(self):
         self.connection.close()
-
-    def send_query_to_db(self, func):
-        pass
 
     def table_isexist(self):
         table_count = self.cursor.execute('''
@@ -35,8 +26,4 @@ class DB():
         else:
             return False
 
-    def create_initial_table(self):
-        self.cursor.execute('''
-        CREATE TABLE main (id INTEGER NOT NULL PRIMARY KEY, date TEXT NOT NULL, item TEXT NOT NULL, price INT NOT NULL)
-        ''')
-        self.connection.commit()
+

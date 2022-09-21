@@ -2,7 +2,7 @@ from tkinter import StringVar, messagebox
 
 from Views.SearchData import SearchData
 from Views.Validation import regist_data_invalid_modal
-from Models.SearchDataModel import SearchDataModel
+from Models.MainDataModel import MainDataModel
 from Models.ValidationModel import date_form_validation, is_num_only, validation_form_data
 from Controllers.EditSearchDataController import EditSearchDataController
 
@@ -15,7 +15,7 @@ class SearchDataController():
 
         self.data = []
 
-        self.model = SearchDataModel()
+        self.model = MainDataModel()
         self.view = SearchData(master)
 
         date_only_cmd = self.view.form_frame.register(

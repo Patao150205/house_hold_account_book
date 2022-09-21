@@ -39,6 +39,12 @@ class RegistData(ttk.Frame):
         price_label = ttk.Label(self.form_frame, text='金額')
         price_label.grid(row=3, column=0)
 
+        price_label = ttk.Label(self.form_frame, text='金額')
+        price_label.grid(row=4, column=0)
+
+        category_label = ttk.Label(self.form_frame, text='内訳')
+        category_label.grid(row=4, column=0)
+
         self.date_entry = ttk.Entry(
             self.form_frame, justify=CENTER, validate='all')
         self.date_entry.grid(row=1, column=1, pady=3)
@@ -48,6 +54,8 @@ class RegistData(ttk.Frame):
         self.price_entry = ttk.Entry(
             self.form_frame, justify=CENTER, validate='key')
         self.price_entry.grid(row=3, column=1, pady=3)
+        self.category_combobox = ttk.Combobox(self.form_frame,justify=CENTER, height=15,  state='readonly')
+        self.category_combobox.grid(row=4, column=1, pady=3)
 
     def create_widgets_for_form_button_frame(self):
         self.form_clear_button = ttk.Button(
