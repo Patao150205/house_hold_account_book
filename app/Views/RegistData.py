@@ -13,7 +13,7 @@ class RegistData(ttk.Frame):
         self.master = master
         self.form_frame = ttk.Frame(self, padding=10)
         self.form_frame.pack()
-        self.form_button_frame = ttk.Frame(self, padding=(0, 0, 0, 40))
+        self.form_button_frame = ttk.Frame(self, padding=(0, 0, 0, 15))
         self.form_button_frame.pack()
         self.data_display_frame = ttk.Frame(self, borderwidth=2, relief=RIDGE)
         self.data_display_frame.pack()
@@ -39,9 +39,6 @@ class RegistData(ttk.Frame):
         price_label = ttk.Label(self.form_frame, text='金額')
         price_label.grid(row=3, column=0)
 
-        price_label = ttk.Label(self.form_frame, text='金額')
-        price_label.grid(row=4, column=0)
-
         category_label = ttk.Label(self.form_frame, text='内訳')
         category_label.grid(row=4, column=0)
 
@@ -54,7 +51,7 @@ class RegistData(ttk.Frame):
         self.price_entry = ttk.Entry(
             self.form_frame, justify=CENTER, validate='key')
         self.price_entry.grid(row=3, column=1, pady=3)
-        self.category_combobox = ttk.Combobox(self.form_frame,justify=CENTER, height=15,  state='readonly')
+        self.category_combobox = ttk.Combobox(self.form_frame,justify=CENTER, height=16,  state='readonly')
         self.category_combobox.grid(row=4, column=1, pady=3)
 
     def create_widgets_for_form_button_frame(self):
@@ -66,7 +63,7 @@ class RegistData(ttk.Frame):
         self.form_input_button.pack(side=LEFT, padx=5)
 
     def create_widgets_for_display_frame(self):
-        columns = ('date', 'item', 'price')
+        columns = ('date', 'item','category', 'price')
 
         table_frame = ttk.Frame(self.data_display_frame)
         table_frame.pack()
@@ -77,12 +74,14 @@ class RegistData(ttk.Frame):
         # レコード選択
         self.data_treeview.column('#0', width=0, stretch=False)
         self.data_treeview.column('date', width=80)
-        self.data_treeview.column('item', width=200)
+        self.data_treeview.column('item', width=250)
+        self.data_treeview.column('category', width=80)
         self.data_treeview.column('price', width=80)
 
         self.data_treeview.heading('#0', text='')
         self.data_treeview.heading('date', text='年月日')
         self.data_treeview.heading('item', text='科目')
+        self.data_treeview.heading('category', text='内訳')
         self.data_treeview.heading('price', text='金額')
 
         self.data_treeview.grid(column=0, row=0)

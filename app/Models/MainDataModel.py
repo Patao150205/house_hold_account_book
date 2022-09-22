@@ -13,19 +13,19 @@ class MainDataModel():
 
     def create_initial_table(self):
         self.db.cursor.execute('''
-        CREATE TABLE main (id INTEGER NOT NULL PRIMARY KEY, date TEXT NOT NULL, item TEXT NOT NULL, price INT NOT NULL)
+        CREATE TABLE main (id INTEGER NOT NULL PRIMARY KEY, date TEXT NOT NULL, item TEXT NOT NULL,category_id INT NOT NULL, price INT NOT NULL)
         ''')
         self.db.connection.commit()
 
     def create(self, data):
-        print(data)
+        print(data, 'なぜ')
         self.db.cursor.executemany(
-            'INSERT INTO main(date, item, price) VALUES (?, ?, ?)', data)
+            'INSERT INTO main(date, item, category_id, price) VALUES (?, ?, ?, ?)', data)
         self.db.connection.commit()
 
-    def search_data(self):
+    def search_data(self, where):
         data = self.db.cursor.execute(
-            f'SELECT * FROM {self.table_name}').fetchall()
+            f'SELECT * FROM {self.table_name} WHERE date >= ? AND date <= ?', where).fetchall()
 
         return data
 
@@ -37,5 +37,5 @@ class MainDataModel():
     def edit(self, data):
         print(data)
         self.db.cursor.execute(
-            f'UPDATE {self.table_name} SET (date, item, price) = (?, ?, ?) WHERE id=?', data)
+            f'UPDATE {self.table_name} SET (date, item, category_id, price) = (?, ?, ?, ?) WHERE id=?', data)
         self.db.connection.commit()

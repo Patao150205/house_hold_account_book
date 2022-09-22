@@ -21,7 +21,7 @@ class SearchData(ttk.Frame):
         self.send_data_button_frame.pack()
 
         self.create_widgets_for_form_frame()
-        self.create_widgets_for_form_button_frame()
+        # self.create_widgets_for_form_button_frame()
         self.create_widgets_for_display_frame()
         self.create_widgets_for_send_data_button_frame()
 
@@ -30,51 +30,62 @@ class SearchData(ttk.Frame):
             self.form_frame, text='検索するデータを入力してください。')
         description_label.grid(row=0, column=0, columnspan=2)
 
-        date_label = ttk.Label(self.form_frame, text='年月日')
-        date_label.grid(row=1, column=0)
+        date_from_label = ttk.Label(self.form_frame, text='年月日(from)')
+        date_from_label.grid(row=1, column=0)
+        date_to_label = ttk.Label(self.form_frame, text='年月日(to)')
+        date_to_label.grid(row=2, column=0)
+        # item_label = ttk.Label(self.form_frame, text='科目')
+        # item_label.grid(row=3, column=0)
 
-        item_label = ttk.Label(self.form_frame, text='科目')
-        item_label.grid(row=2, column=0)
+        # price_label = ttk.Label(self.form_frame, text='金額')
+        # price_label.grid(row=4, column=0)
 
-        price_label = ttk.Label(self.form_frame, text='金額')
-        price_label.grid(row=3, column=0)
+        # category_label = ttk.Label(self.form_frame, text='内訳')
+        # category_label.grid(row=5, column=0)
 
-        self.date_entry = ttk.Entry(
+        self.date_from_entry = ttk.Entry(
             self.form_frame, justify=CENTER, validate='all')
-        self.date_entry.grid(row=1, column=1, pady=3)
-        self.item_entry = ttk.Entry(
-            self.form_frame, justify=CENTER)
-        self.item_entry.grid(row=2, column=1, pady=3)
-        self.price_entry = ttk.Entry(
-            self.form_frame, justify=CENTER, validate='key')
-        self.price_entry.grid(row=3, column=1, pady=3)
+        self.date_from_entry.grid(row=1, column=1, pady=3)
+        self.date_to_entry = ttk.Entry(
+            self.form_frame, justify=CENTER, validate='all')
+        self.date_to_entry.grid(row=2, column=1, pady=3)
+        # self.item_entry = ttk.Entry(
+        #     self.form_frame, justify=CENTER)
+        # self.item_entry.grid(row=3, column=1, pady=3)
+        # self.price_entry = ttk.Entry(
+        #     self.form_frame, justify=CENTER, validate='key')
+        # self.price_entry.grid(row=4, column=1, pady=3)
+        # self.category_combobox = ttk.Combobox(self.form_frame,justify=CENTER, height=15,  state='readonly')
+        # self.category_combobox.grid(row=5, column=1, pady=3)
 
-    def create_widgets_for_form_button_frame(self):
-        self.form_clear_button = ttk.Button(
-            self.form_button_frame, text='クリア')
+    # def create_widgets_for_form_button_frame(self):
+    #     self.form_clear_button = ttk.Button(
+    #         self.form_button_frame, text='クリア')
 
-        self.form_clear_button.pack()
+    #     self.form_clear_button.pack()
 
     def create_widgets_for_display_frame(self):
-        columns = ('id', 'date', 'item', 'price')
+        columns = ('id', 'date', 'item','category', 'price')
 
         table_frame = ttk.Frame(self.data_display_frame)
         table_frame.pack()
 
         self.data_treeview = ttk.Treeview(
-            table_frame, columns=columns, height=15)
+            table_frame, columns=columns, height=25)
 
         # レコード選択
         self.data_treeview.column('#0', width=0, stretch=False)
         self.data_treeview.column('id', width=0, stretch=False)
         self.data_treeview.column('date', width=80)
-        self.data_treeview.column('item', width=200)
+        self.data_treeview.column('item', width=250)
+        self.data_treeview.column('category', width=80)
         self.data_treeview.column('price', width=80)
 
         self.data_treeview.heading('#0', text='')
         self.data_treeview.heading('id', text='ID')
         self.data_treeview.heading('date', text='年月日')
         self.data_treeview.heading('item', text='科目')
+        self.data_treeview.heading('category', text='内訳')
         self.data_treeview.heading('price', text='金額')
 
         self.data_treeview.grid(column=0, row=0)
@@ -88,6 +99,14 @@ class SearchData(ttk.Frame):
     def create_widgets_for_send_data_button_frame(self):
         self.send_data_button = ttk.Button(self, text='データを検索', width=20)
         self.send_data_button.pack(pady=20)
+        s = ttk.Style()
+        # s.theme_use('classic')
+        s.configure('MyWidget.TButton', foreground='red', background='blue')
+        self.dashboard_button = ttk.Button(self, text='ダッシュボード起動', style='MyWidget.TButton', width=20)
+        self.dashboard_button.pack(pady=0)
 
     def set_default_date(self):
-        self.date_entry.insert(0, get_current_yyyy_mm_dd())
+        today = get_current_yyyy_mm_dd()
+        print(today)
+        self.date_from_entry.insert(0, today)
+        self.date_to_entry.insert(0, today)

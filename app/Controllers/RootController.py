@@ -1,11 +1,12 @@
 # from Models import
+from tkinter.tix import Tk
 from Views.Root import Root
 from Controllers.RegistDataController import RegistDataController
 from Controllers.SearchDataController import SearchDataController
 
 
 class RootController():
-    def __init__(self, root):
+    def __init__(self, root: Tk):
         self.view = Root(root)
         self.regist_data_controller = RegistDataController(
             master=self.view.notebook)
